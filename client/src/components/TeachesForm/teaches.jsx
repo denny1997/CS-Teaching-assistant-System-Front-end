@@ -12,6 +12,10 @@ const semesterList = [];
 var courseList = [];
 var facultyList = [];
 
+function filter(inputValue, path) {
+    return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+}
+
 export default class Teaches extends React.Component{
 
     constructor(props) {
@@ -37,8 +41,8 @@ export default class Teaches extends React.Component{
             .then(function (response) {
                 response.data.map(function(res){
                     courseList.push({
-                        value: res.name,
-                        label: res.name
+                        value: res.name+"/"+res.title,
+                        label: res.name+"/"+res.title,
                     })
                 });
             })
@@ -144,19 +148,41 @@ export default class Teaches extends React.Component{
         });
     };
 
+    routerToCourse = item => {
+        this.props.history.push({
+            pathname: `/app/archive/course_detail`,
+            state: {
+                name: item['name'],
+                title: item['title'],
+                description: item['description']
+            }
+        })
+    };
+
+    routerToFaculty = item => {
+        this.props.history.push({
+            pathname: `/app/archive/faculty_detail`,
+            state: {
+                name: item['name'],
+                title: item['title'],
+                email: item['email']
+            }
+        })
+    };
+
     render(){
 
         const {teaches} = this.state;
+        console.log(teaches)
         var tableData = [];
         for(var item in teaches){
             var temp = {};
             temp['key']=item;
-            temp['course_name']=teaches[item]['course']['name'];
+            temp['course_name']=<a onClick={this.routerToCourse.bind(this,teaches[item]['course'])}>{teaches[item]['course']['name']}</a>;
             temp['credits']=teaches[item]['course']['credits'];
-            temp['sectionNumber']=teaches[item]['course']['sectionNumber'];
-            temp['faculty_name']=teaches[item]['faculty']['name'];
+            temp['title']=teaches[item]['course']['title'];
+            temp['faculty_name']=<a onClick={this.routerToFaculty.bind(this,teaches[item]['faculty'])}>{teaches[item]['faculty']['name']}</a>;
             temp['semester']=teaches[item]['semester'];
-            // temp['description']=teaches[item]['course']['description'];
             temp['operation']=<div>
                                 <Button onClick={this.delete.bind(this,teaches[item]["id"])}><Icon type="delete" /></Button>
                             </div>;
@@ -166,13 +192,12 @@ export default class Teaches extends React.Component{
         console.log(tableData);
 
         const columns = [
-            { title: 'course_name', dataIndex: 'course_name', key: 'course_name' },
-            { title: 'credits', dataIndex: 'credits', key: 'credits'},
-            { title: 'sectionNumber', dataIndex: 'sectionNumber', key: 'sectionNumber' },
-            { title: 'faculty_name', dataIndex: 'faculty_name', key: 'faculty_name'},
-            { title: 'semester', dataIndex: 'semester', key: 'semester'},
-            // { title: 'description', dataIndex: 'description', key: 'description'},
-            { title: 'operation', dataIndex: 'operation', key: 'operation' },
+            { title: 'Course Code', dataIndex: 'course_name', key: 'course_name' },
+            { title: 'Course Name', dataIndex: 'title', key: 'title' },
+            { title: 'Credits', dataIndex: 'credits', key: 'credits'},
+            { title: 'Faculty Name', dataIndex: 'faculty_name', key: 'faculty_name'},
+            { title: 'Semester', dataIndex: 'semester', key: 'semester'},
+            { title: 'Operation', dataIndex: 'operation', key: 'operation' },
         ];
 
         if(!teaches) {
@@ -183,7 +208,7 @@ export default class Teaches extends React.Component{
                 <Row>
                     <Button onClick={this.addTeaches}><Icon type="plus-square" /></Button>
                 </Row>
-                <Row gutter={16} className="A" style={{marginTop:'5px', marginBottom:'5px'}}>
+                <Row gutter={16} style={{marginTop:'5px', marginBottom:'5px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                     <Col sm={6} >
                         <InputGroup compact>
                             <Cascader
@@ -193,6 +218,7 @@ export default class Teaches extends React.Component{
                                 options={courseList}
                                 onChange={this.course_Select}
                                 value={this.state.selected_course}
+                                showSearch={{filter}}
                             />
                         </InputGroup>
                     </Col>
@@ -205,6 +231,7 @@ export default class Teaches extends React.Component{
                                 options={facultyList}
                                 onChange={this.faculty_Select}
                                 value={this.state.selected_faculty}
+                                showSearch={{filter}}
                             />
                         </InputGroup>
                     </Col>
@@ -228,7 +255,7 @@ export default class Teaches extends React.Component{
 
                 </Row>
                 <Table
-                    pagination={{pageSize:2, onChange:this.onChange, current:this.state.current}}
+                    pagination={{pageSize:6, onChange:this.onChange, current:this.state.current}}
                     dataSource={tableData}
                     columns={columns}
                     showHeader={true}

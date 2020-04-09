@@ -3,10 +3,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import history from '../components/common/history';
 
 import App from '../components/common/App';
-import Login from '../components/common/Login';
 import Home from '../components/common/Home';
 import NoMatch from '../components/common/404';
-import Register from '../components/common/Register'
 
 class MRoute extends Component {
   render() {
@@ -15,8 +13,6 @@ class MRoute extends Component {
         <Switch>
           <Route exact path="/" component={Home}/>
           <Route path="/app" component={App}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
           <Route component={NoMatch}/>
         </Switch>
       </Router>

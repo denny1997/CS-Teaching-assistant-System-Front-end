@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, Input, Icon} from "antd";
+import {Modal, Input, Icon} from "antd";
 import axios from "axios";
 
 export default class AddCourseComponent extends React.Component {
@@ -8,7 +8,7 @@ export default class AddCourseComponent extends React.Component {
         this.state = {
             name: "" ,
             credits: "",
-            sectionNum: "",
+            title: "",
             description: ""
         };
     }
@@ -17,7 +17,7 @@ export default class AddCourseComponent extends React.Component {
         let param = new URLSearchParams();
         param.append("name",this.state.name);
         param.append("credits",this.state.credits);
-        param.append("sectionNumber",this.state.sectionNum);
+        param.append("title",this.state.title);
         param.append("description",this.state.description);
 
         axios.post(`http://127.0.0.1:8000/add-course`,param)
@@ -33,7 +33,7 @@ export default class AddCourseComponent extends React.Component {
         this.setState({
             name: "",
             credits: "",
-            sectionNum: "",
+            title: "",
             description: ""
         });
     };
@@ -46,8 +46,8 @@ export default class AddCourseComponent extends React.Component {
         this.setState({ credits: e.target.value });
     };
 
-    onChangeSec = e => {
-        this.setState({ sectionNum: e.target.value });
+    onChangeTitle = e => {
+        this.setState({ title: e.target.value });
     };
 
     onChangeDes = e => {
@@ -65,8 +65,8 @@ export default class AddCourseComponent extends React.Component {
                 onCancel={onClose}
             >
                 <Input style={{marginBottom:'0.25cm', marginTop:'0.5cm'}} prefix={<Icon type="book" style={{ fontSize: 13 }} />} placeholder="course name" onChange={this.onChangeName} value={this.state.name} required={true} />
-                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="star" style={{ fontSize: 13 }} />} type="number" placeholder="course credits" onChange={this.onChangeCredits} value={this.state.credits} required={true} />
-                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="tag" style={{ fontSize: 13 }} />} placeholder="section number" onChange={this.onChangeSec} value={this.state.sectionNum} required={true} />
+                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="tag" style={{ fontSize: 13 }} />} placeholder="course title" onChange={this.onChangeTitle} value={this.state.title} required={true} />
+                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="star" style={{ fontSize: 13 }} />} placeholder="course credits" onChange={this.onChangeCredits} value={this.state.credits} required={true} />
                 <Input style={{marginBottom:'0.5cm', marginTop:'0.25cm'}} prefix={<Icon type="info-circle" style={{ fontSize: 13 }} />} placeholder="course description" onChange={this.onChangeDes} value={this.state.description} required={true} />
             </Modal>
         );

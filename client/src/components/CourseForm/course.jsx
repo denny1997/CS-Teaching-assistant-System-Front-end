@@ -20,7 +20,6 @@ export default class Courses extends React.Component{
 
     componentDidMount(){
         console.log("componentDidMount---->");
-        //axios发送请求
         const url = `http://localhost:8000/list-course`;
         console.log("loading data...");
         let promise = axios.get(url);
@@ -74,6 +73,7 @@ export default class Courses extends React.Component{
             pathname: `/app/archive/course_detail`,
             state: {
                 name: item['name'],
+                title: item['title'],
                 description: item['description']
             }
         })
@@ -88,7 +88,7 @@ export default class Courses extends React.Component{
             temp['key']=item;
             temp['name']=<a onClick={this.routerTo.bind(this,courses[item])}>{courses[item]['name']}</a>;
             temp['credits']=courses[item]['credits'];
-            temp['sectionNumber']=courses[item]['sectionNumber'];
+            temp['title']=courses[item]['title'];
             temp['operation']=<div>
                                    <Button onClick={this.modify.bind(this,courses[item])}><Icon type="edit" /></Button>
                                    <Button onClick={this.delete.bind(this,courses[item]["id"])}><Icon type="delete" /></Button>
@@ -100,10 +100,10 @@ export default class Courses extends React.Component{
         console.log(tableData);
 
         const columns = [
-            { title: 'name', dataIndex: 'name', key: 'name' },
-            { title: 'credits', dataIndex: 'credits', key: 'credits'},
-            { title: 'sectionNumber', dataIndex: 'sectionNumber', key: 'sectionNumber' },
-            { title: 'operation', dataIndex: 'operation', key: 'operation' },
+            { title: 'Course Code', dataIndex: 'name', key: 'name' },
+            { title: 'Course Name', dataIndex: 'title', key: 'title' },
+            { title: 'Credits', dataIndex: 'credits', key: 'credits'},
+            { title: 'Operation', dataIndex: 'operation', key: 'operation' },
         ];
 
         if(!courses) {
@@ -113,18 +113,12 @@ export default class Courses extends React.Component{
             <div>
                 <Button onClick={this.addCourse}><Icon type="plus-square" /></Button>
                 <Table
-                    pagination={{pageSize:2, onChange:this.onChange, current:this.state.current}}
+                    pagination={{pageSize:6, onChange:this.onChange, current:this.state.current}}
                     columns={columns}
                     expandedRowRender={record => <p style={{margin: 0}}>{record.description}</p>}
                     dataSource={tableData}
                     showHeader={true}
                     bordered={true}
-
-                    // onRowClick={
-                    //     record => {
-                    //         console.log(record);
-                    //     }
-                    // }
                 />
                 <AddCourseComponent
                     visible={this.state.visible}

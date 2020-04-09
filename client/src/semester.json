@@ -1,13 +1,19 @@
 [{
-  "semester": "spring2018"
+  "semester": "2019-sp"
 },{
-  "semester": "fall2018"
+  "semester": "2018-fa"
 },{
-  "semester": "spring2019"
+  "semester": "2018-sp"
 },{
-  "semester": "fall2019"
+  "semester": "2017-fa"
 },{
-  "semester": "spring2020"
+  "semester": "2017-sp"
 },{
-  "semester": "fall2020"
+  "semester": "2016-fa"
+},{
+  "semester": "2016-sp"
+},{
+  "semester": "2015-fa"
+},{
+  "semester": "2015-sp"
 }]

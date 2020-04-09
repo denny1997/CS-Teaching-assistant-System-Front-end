@@ -33,8 +33,8 @@ export default class FreeFaculty extends React.Component{
             .then(function (response) {
                 response.data.map(function(res){
                     courseList.push({
-                        value: res.name,
-                        label: res.name
+                        value: res.name+"/"+res.title,
+                        label: res.name+"/"+res.title,
                     })
                 });
             })
@@ -119,7 +119,7 @@ export default class FreeFaculty extends React.Component{
         for(var item in free_faculty){
             var temp = {};
             temp['key']=item;
-            temp['research']=free_faculty[item]['research_area'];
+            temp['title']=free_faculty[item]['title'];
             temp['name']=free_faculty[item]['name'];
             temp['email']=free_faculty[item]['email'];
             temp['operation']=<div>
@@ -131,10 +131,10 @@ export default class FreeFaculty extends React.Component{
         console.log(tableData);
 
         const columns = [
-            { title: 'name', dataIndex: 'name', key: 'name' },
-            { title: 'email', dataIndex: 'email', key: 'email'},
-            { title: 'research areas', dataIndex: 'research', key: 'research' },
-            { title: 'operation', dataIndex: 'operation', key: 'operation' }
+            { title: 'Name', dataIndex: 'name', key: 'name' },
+            { title: 'Title', dataIndex: 'title', key: 'title' },
+            { title: 'Email', dataIndex: 'email', key: 'email'},
+            { title: 'Operation', dataIndex: 'operation', key: 'operation' }
         ];
 
         if(!free_faculty) {
@@ -142,7 +142,7 @@ export default class FreeFaculty extends React.Component{
         }
         return(
             <div>
-                <Row gutter={16} className="A" style={{marginTop:'5px', marginBottom:'5px'}}>
+                <Row gutter={16} style={{marginTop:'5px', marginBottom:'5px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
                     <Col sm={6} >
                         <InputGroup compact>
                             <Cascader
@@ -163,7 +163,7 @@ export default class FreeFaculty extends React.Component{
 
                 </Row>
                 <Table
-                    pagination={{pageSize:2, onChange:this.onChange, current:this.state.current}}
+                    pagination={{pageSize:6, onChange:this.onChange, current:this.state.current}}
                     dataSource={tableData}
                     columns={columns}
                     showHeader={true}

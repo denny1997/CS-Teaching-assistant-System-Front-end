@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, Input, Icon} from "antd";
+import {Modal, Input, Icon} from "antd";
 import axios from "axios";
 
 export default class AddFacultyComponent extends React.Component {
@@ -8,7 +8,7 @@ export default class AddFacultyComponent extends React.Component {
         this.state = {
             name: "" ,
             email: "",
-            research: ""
+            title: ""
         };
     }
 
@@ -16,7 +16,7 @@ export default class AddFacultyComponent extends React.Component {
         let param = new URLSearchParams();
         param.append("name",this.state.name);
         param.append("email",this.state.email);
-        param.append("research",this.state.research);
+        param.append("title",this.state.title);
 
         axios.post(`http://127.0.0.1:8000/add-faculty`,param)
             .then(res=>{
@@ -31,7 +31,7 @@ export default class AddFacultyComponent extends React.Component {
         this.setState({
             name: "",
             email: "",
-            research: ""
+            title: ""
         });
     };
 
@@ -43,8 +43,8 @@ export default class AddFacultyComponent extends React.Component {
         this.setState({ email: e.target.value });
     };
 
-    onChangeResearch = e => {
-        this.setState({ research: e.target.value });
+    onChangeTitle = e => {
+        this.setState({ title: e.target.value });
     };
 
     render() {
@@ -58,8 +58,8 @@ export default class AddFacultyComponent extends React.Component {
                 onCancel={onClose}
             >
                 <Input style={{marginBottom:'0.25cm', marginTop:'0.5cm'}} prefix={<Icon type="book" style={{ fontSize: 13 }} />} placeholder="faculty name" onChange={this.onChangeName} value={this.state.name} required={true} />
-                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="tag" style={{ fontSize: 13 }} />} placeholder="email" onChange={this.onChangeEmail} value={this.state.email} required={true} />
-                <Input style={{marginBottom:'0.5cm', marginTop:'0.25cm'}} prefix={<Icon type="info-circle" style={{ fontSize: 13 }} />} placeholder="research areas" onChange={this.onChangeResearch} value={this.state.research} required={true} />
+                <Input style={{marginBottom:'0.25cm', marginTop:'0.25cm'}} prefix={<Icon type="info-circle" style={{ fontSize: 13 }} />} placeholder="title" onChange={this.onChangeTitle} value={this.state.title} required={true} />
+                <Input style={{marginBottom:'0.5cm', marginTop:'0.25cm'}} prefix={<Icon type="tag" style={{ fontSize: 13 }} />} placeholder="email" onChange={this.onChangeEmail} value={this.state.email} required={true} />
             </Modal>
         );
     }

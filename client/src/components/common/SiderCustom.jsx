@@ -12,9 +12,9 @@ export default class SiderCustom extends Component{
         const { collapsed }= props;
         this.state = {
             collapsed: collapsed,
-            firstHide: true, //第一次先隐藏暴露的子菜单
-            selectedKey: '', //选择的路径
-            openKey: '', //打开的路径（选择的上一层）
+            firstHide: true,
+            selectedKey: '',
+            openKey: '',
         }
     }
     componentDidMount() {
@@ -70,35 +70,26 @@ export default class SiderCustom extends Component{
                 >
 
                     <SubMenu key={"/app/archive"}
-                    title={<span><Icon type="area-chart" /><span>Archives</span></span>}
+                    title={<span><Icon type="folder-open" /><span>Archives</span></span>}
                     >
-                        {/*<Menu.Item key={"/app/form"}>*/}
-                        {/*    <Link to={"/app/form"}><Icon type="search" /><span>搜索电影</span></Link>*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key={"/app/recommand"}>*/}
-                        {/*    <Link to={"/app/recommand"}><Icon type="like" /><span>个性推荐</span></Link>*/}
-                        {/*</Menu.Item>*/}
                         <Menu.Item key={"/app/archive/courses"}>
-                            <Link to={"/app/archive/courses"}><Icon type="like" /><span>Courses</span></Link>
+                            <Link to={"/app/archive/courses"}><Icon type="book" /><span>Courses</span></Link>
                         </Menu.Item>
                         <Menu.Item key={"/app/archive/faculties"}>
-                            <Link to={"/app/archive/faculties"}><Icon type="like" /><span>Faculties</span></Link>
+                            <Link to={"/app/archive/faculties"}><Icon type="user" /><span>Faculties</span></Link>
                         </Menu.Item>
                     </SubMenu>
 
                     <Menu.Item key="/app/teaches">
-                        <Link to={'/app/teaches'}><Icon type="edit" /><span>Records</span></Link>
+                        <Link to={'/app/teaches'}><Icon type="search" /><span>Records</span></Link>
                     </Menu.Item>
                     <Menu.Item key="/app/free">
-                        <Link to={'/app/free'}><Icon type="edit" /><span>Free Faculties</span></Link>
+                        <Link to={'/app/free'}><Icon type="team" /><span>Free Faculties</span></Link>
+                    </Menu.Item>
+                    <Menu.Item key="/app/recommendation">
+                        <Link to={'/app/recommendation'}><Icon type="like" /><span>Recommendation</span></Link>
                     </Menu.Item>
 
-                    {/*<Menu.Item key="/app">*/}
-                    {/*    <Link to={'/app'}><Icon type="edit" /><span>个人中心</span></Link>*/}
-                    {/*</Menu.Item>*/}
-                    {/*<Menu.Item key="/app/qa">*/}
-                    {/*    <Link to={'/app/qa'}><Icon type="android" /><span>问答系统</span></Link>*/}
-                    {/*</Menu.Item>*/}
                 </Menu>
             </Sider>
         )

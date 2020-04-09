@@ -20,7 +20,6 @@ export default class Faculties extends React.Component{
 
     componentDidMount(){
         console.log("componentDidMount---->");
-        //axios发送请求
         const url = `http://localhost:8000/list-faculty`;
         console.log("loading data...");
         let promise = axios.get(url);
@@ -69,6 +68,17 @@ export default class Faculties extends React.Component{
         this.setState({ deleteData: id });
     };
 
+    routerTo = item => {
+        this.props.history.push({
+            pathname: `/app/archive/faculty_detail`,
+            state: {
+                name: item['name'],
+                title: item['title'],
+                email: item['email']
+            }
+        })
+    };
+
     render(){
 
         const {faculties} = this.state;
@@ -76,9 +86,9 @@ export default class Faculties extends React.Component{
         for(var item in faculties){
             var temp = {};
             temp['key']=item;
-            temp['name']=faculties[item]['name'];
+            temp['name']=<a onClick={this.routerTo.bind(this,faculties[item])}>{faculties[item]['name']}</a>;
             temp['email']=faculties[item]['email'];
-            temp['research']=faculties[item]['research_area'];
+            temp['title']=faculties[item]['title'];
             temp['operation']=<div>
                                   <Button onClick={this.modify.bind(this,faculties[item])}><Icon type="edit" /></Button>
                                   <Button onClick={this.delete.bind(this,faculties[item]["id"])}><Icon type="delete" /></Button>
@@ -89,10 +99,10 @@ export default class Faculties extends React.Component{
         console.log(tableData);
 
         const columns = [
-            { title: 'name', dataIndex: 'name', key: 'name' },
-            { title: 'email', dataIndex: 'email', key: 'email'},
-            { title: 'research areas', dataIndex: 'research', key: 'research' },
-            { title: 'operation', dataIndex: 'operation', key: 'operation' }
+            { title: 'Name', dataIndex: 'name', key: 'name' },
+            { title: 'Title', dataIndex: 'title', key: 'title' },
+            { title: 'Email', dataIndex: 'email', key: 'email'},
+            { title: 'Operation', dataIndex: 'operation', key: 'operation' }
         ];
 
         if(!faculties) {
@@ -102,7 +112,7 @@ export default class Faculties extends React.Component{
             <div>
                 <Button onClick={this.addFaculty}><Icon type="plus-square" /></Button>
                 <Table
-                    pagination={{pageSize:2, onChange:this.onChange, current:this.state.current}}
+                    pagination={{pageSize:6, onChange:this.onChange, current:this.state.current}}
                     dataSource={tableData}
                     columns={columns}
                     showHeader={true}

@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, Input, Icon} from "antd";
+import {Modal} from "antd";
 import axios from "axios";
 
 export default class DeleteCourseComponent extends React.Component {

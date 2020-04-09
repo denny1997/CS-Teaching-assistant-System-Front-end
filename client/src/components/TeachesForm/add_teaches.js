@@ -1,7 +1,11 @@
 import React from "react";
-import {Modal, Button, Input, Icon, Cascader} from "antd";
+import {Modal, Input, Icon, Cascader} from "antd";
 import axios from "axios";
 const InputGroup = Input.Group;
+
+function filter(inputValue, path) {
+    return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+}
 
 export default class AddTeachesComponent extends React.Component {
     constructor(props) {
@@ -68,6 +72,7 @@ export default class AddTeachesComponent extends React.Component {
                         onChange={this.onChangeCourse}
                         value={this.state.course_name}
                         required={true}
+                        showSearch={{filter}}
                     />
                 </InputGroup>
                 <InputGroup style={{marginBottom:'0.25cm', marginTop:'0.5cm'}} prefix={<Icon type="book" style={{ fontSize: 13 }} />}>
@@ -79,6 +84,7 @@ export default class AddTeachesComponent extends React.Component {
                         onChange={this.onChangeFaculty}
                         value={this.state.faculty_name}
                         required={true}
+                        showSearch={{filter}}
                     />
                 </InputGroup>
                 <InputGroup style={{marginBottom:'0.25cm', marginTop:'0.5cm'}} prefix={<Icon type="book" style={{ fontSize: 13 }} />}>
